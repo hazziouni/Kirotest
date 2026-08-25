@@ -186,9 +186,9 @@ function renderReview(){
     const a=state.answers[q.id]||[];const ok=sameSet(a,q.correct);const status=!a.length?["Unanswered","skip"]:ok?["Correct","ok"]:["Incorrect","bad"];
     return `<details class="review-item"><summary>Q${i+1}. ${esc(q.prompt)} <span class="statuspill ${status[1]}">${status[0]}</span>${q.scored?"":'<span class="statuspill skip">experimental</span>'}</summary>
       <div class="expl"><strong>Explanation:</strong> ${esc(q.explanation)}</div>
-      <div style="margin-top:10px">${q.choices.map((c,j)=>{
-        const isC=q.correct.includes(j),isU=a.includes(j);let cls=isC?"correct":(isU&&!isC?"user-wrong":"");
-        return `<div class="choice-review ${cls}"><b>${letters[j]}. ${esc(c)} ${isC?"✓ Correct":isU?"✕ Your choice":""}</b>${esc(q.why[j])}</div>`;
+      <div style="margin-top:10px">${(state.choiceOrder?.[q.id] || q.choices.map((_,j)=>j)).map((originalIndex,displayIndex)=>{
+        const c=q.choices[originalIndex], isC=q.correct.includes(originalIndex),isU=a.includes(originalIndex);let cls=isC?"correct":(isU&&!isC?"user-wrong":"");
+        return `<div class="choice-review ${cls}"><b>${letters[displayIndex]}. ${esc(c)} ${isC?"✓ Correct":isU?"✕ Your choice":""}</b>${esc(q.why[originalIndex])}</div>`;
       }).join("")}</div>
     </details>`;
   }).join("");
