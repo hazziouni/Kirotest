@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<meta name="theme-color" content="#111827"/>
+<title>DEA-C01 Practice Lab — 65 Question Mock Exam</title>
+<link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<header class="appbar">
+  <div class="appbar-inner">
+    <div class="brand">
+      <div class="brand-mark">DEA</div>
+      <div>DEA-C01 Practice Lab<small>Original exam-style questions</small></div>
+    </div>
+    <div class="topstatus hidden" id="topstatus">
+      <span class="progress-chip" id="topProgress">Question 1 / 65</span>
+      <div class="timer" id="timer">03:00:00</div>
+    </div>
+  </div>
+</header>
+
+<main>
+<section id="home">
+  <div class="hero">
+    <span class="eyebrow">AWS Data Engineer Associate • Practice</span>
+    <h1>65-question DEA-C01 mock exam</h1>
+    <p>Train with scenario-based questions across the current four exam domains. Choose a 3-hour timed simulation or untimed practice, then review every answer with detailed reasoning.</p>
+    <div class="stats">
+      <div class="stat"><strong>65</strong><span>questions</span></div>
+      <div class="stat"><strong>4</strong><span>exam domains</span></div>
+      <div class="stat"><strong>50 + 15</strong><span>scored + experimental</span></div>
+      <div class="stat"><strong>720</strong><span>official scaled pass score</span></div>
+    </div>
+  </div>
+
+  <div class="setup">
+    <div class="card card-pad">
+      <h2>Choose your mode</h2>
+      <div class="modegrid">
+        <label class="mode selected" id="timedMode">
+          <input type="radio" name="mode" value="timed" checked>
+          <div class="mode-title">3-hour mock <span class="badge">Timed</span></div>
+          <p>180-minute custom training timer. Auto-submits when time expires.</p>
+        </label>
+        <label class="mode" id="untimedMode">
+          <input type="radio" name="mode" value="untimed">
+          <div class="mode-title">Practice mode <span class="badge">No timer</span></div>
+          <p>Work at your own pace with the same 65-question exam set.</p>
+        </label>
+      </div>
+      <div class="optionline">
+        <input id="shuffle" type="checkbox" checked>
+        <label for="shuffle"><strong>Shuffle question order</strong><br><span style="color:#6b7280">Keeps the domain mix but reduces memorization by question number.</span></label>
+      </div>
+      <button class="primary big" id="startBtn">Start mock exam</button>
+      <div id="resumeBox" class="hidden" style="margin-top:10px">
+        <button class="ghost big" id="resumeBtn" style="margin-top:0">Resume saved attempt</button>
+      </div>
+    </div>
+
+    <div class="card card-pad">
+      <h3>Current blueprint coverage</h3>
+      <div class="blue-note"><strong>Timing note:</strong> the real AWS DEA-C01 exam is currently 130 minutes. This site keeps the 3-hour training mode you requested.</div>
+      <div class="domain-list">
+        <div class="domain-row"><div class="domain-meta"><strong>Data Ingestion & Transformation</strong><span>22 questions</span><div class="bar"><i style="width:34%"></i></div></div><b>34%</b></div>
+        <div class="domain-row"><div class="domain-meta"><strong>Data Store Management</strong><span>17 questions</span><div class="bar"><i style="width:26%"></i></div></div><b>26%</b></div>
+        <div class="domain-row"><div class="domain-meta"><strong>Data Operations & Support</strong><span>14 questions</span><div class="bar"><i style="width:22%"></i></div></div><b>22%</b></div>
+        <div class="domain-row"><div class="domain-meta"><strong>Data Security & Governance</strong><span>12 questions</span><div class="bar"><i style="width:18%"></i></div></div><b>18%</b></div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-note">Independent study tool. Not affiliated with or endorsed by Amazon Web Services. Questions are original and are not copied from the live certification exam.</div>
+</section>
+
+<section id="exam" class="hidden">
+  <div class="exam-layout">
+    <div class="card question-card">
+      <div class="qtop">
+        <div class="qnum" id="qnum">Question 1 of 65</div>
+        <div class="domain-tag" id="domainTag"></div>
+      </div>
+      <p class="qprompt" id="qprompt"></p>
+      <div id="qhint" class="qhint hidden"></div>
+      <div class="choices" id="choices"></div>
+      <div class="qactions">
+        <button class="ghost" id="prevBtn">← Previous</button>
+        <button class="ghost review-toggle" id="reviewBtn">☆ Mark for review</button>
+        <button class="secondary" id="nextBtn">Next →</button>
+      </div>
+    </div>
+    <aside class="card sidebar">
+      <div class="side-head"><strong>Question navigator</strong><span class="legend">green = answered</span></div>
+      <div class="qgrid" id="qgrid"></div>
+      <div class="side-summary">
+        <div class="mini"><strong id="answeredCount">0</strong>answered</div>
+        <div class="mini"><strong id="flaggedCount">0</strong>review</div>
+      </div>
+      <button class="dangerbtn submit-side" id="submitBtn">Submit exam</button>
+    </aside>
+  </div>
+</section>
+
+<section id="results" class="hidden">
+  <div class="card results-hero">
+    <div class="score-ring" id="scoreRing" style="--scoredeg:0deg"><div><strong id="scorePct">0%</strong><span>scored questions</span></div></div>
+    <div class="result-title">
+      <h2 id="resultHeadline">Exam complete</h2>
+      <p id="resultText"></p>
+      <div class="result-actions">
+        <button class="primary" id="retryMissed">Practice missed questions</button>
+        <button class="secondary" id="newExam">Start a new exam</button>
+        <button class="ghost" id="toggleReview">Show answer review</button>
+      </div>
+    </div>
+  </div>
+  <div class="result-grid">
+    <div class="card result-metric"><span>Official-style scored set</span><strong id="score50">0 / 50</strong></div>
+    <div class="card result-metric"><span>All practice questions</span><strong id="score65">0 / 65</strong></div>
+    <div class="card result-metric"><span>Unanswered</span><strong id="unansweredMetric">0</strong></div>
+    <div class="card result-metric"><span>Time used</span><strong id="timeUsed">—</strong></div>
+  </div>
+  <div class="card breakdown">
+    <h3>Performance by domain</h3>
+    <div id="domainBreakdown"></div>
+  </div>
+  <div class="card review-panel hidden" id="reviewPanel"></div>
+  <div class="footer-note">AWS uses scaled scoring from 100–1,000; 720 is the passing score. A raw percentage in this practice tool is not an official AWS scaled score.</div>
+</section>
+</main>
+
+<div class="mobile-nav hidden" id="mobileNav">
+  <button class="ghost" id="mPrev">← Prev</button>
+  <button class="ghost review-toggle" id="mReview">☆</button>
+  <button class="secondary" id="mNext">Next →</button>
+</div>
+<div class="toast" id="toast"></div>
+<div id="modalRoot"></div>
+<script src="q1.js"></script>
+<script src="q2.js"></script>
+<script src="q3.js"></script>
+<script src="q4.js"></script>
+<script src="q5.js"></script>
+<script src="q6.js"></script>
+<script src="q7.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
