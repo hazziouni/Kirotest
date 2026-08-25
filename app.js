@@ -2,7 +2,7 @@
 const QUESTIONS = window.QUESTIONS || [];
 const KEY="dea-c01-practice-v1";
 let state={
-  mode:"timed", order:[], answers:{}, flagged:{}, current:0, startedAt:null, durationSec:10800,
+  mode:"timed", order:[], answers:{}, flagged:{}, choiceOrder:{}, current:0, startedAt:null, durationSec:10800,
   finished:false, submittedAt:null, subset:null
 };
 let timerHandle=null;
@@ -36,7 +36,7 @@ function startAttempt(subset=null){
   const mode=subset?"untimed":selectedMode();
   let ids=subset?.length?[...subset]:QUESTIONS.map(q=>q.id);
   if(!subset && $("#shuffle").checked) ids=shuffle(ids);
-  state={mode,order:ids,answers:{},flagged:{},current:0,startedAt:Date.now(),durationSec:10800,finished:false,submittedAt:null,subset:subset||null};
+  state={mode,order:ids,answers:{},flagged:{},choiceOrder:{},current:0,startedAt:Date.now(),durationSec:10800,finished:false,submittedAt:null,subset:subset||null};
   save();showExam();renderQuestion();startTimer();
 }
 function resumeAttempt(){
@@ -63,12 +63,21 @@ function renderQuestion(){
   $("#qhint").classList.toggle("hidden",!multi);
   if(multi) $("#qhint").textContent=`Multiple response — select ${q.correct.length} answers.`;
   const ans=state.answers[q.id]||[];
-  $("#choices").innerHTML=q.choices.map((c,i)=>`
-    <label class="choice ${ans.includes(i)?"selected":""}">
-      <input type="${multi?"checkbox":"radio"}" name="q${q.id}" value="${i}" ${ans.includes(i)?"checked":""}>
-      <span class="letter">${letters[i]}</span>
+  state.choiceOrder ??= {};
+  if(!state.choiceOrder[q.id]){
+    state.choiceOrder[q.id]=shuffle(q.choices.map((_,i)=>i));
+    save();
+  }
+  const displayOrder=state.choiceOrder[q.id];
+  $("#choices").innerHTML=displayOrder.map((originalIndex,displayIndex)=>{
+    const c=q.choices[originalIndex];
+    return `
+    <label class="choice ${ans.includes(originalIndex)?"selected":""}">
+      <input type="${multi?"checkbox":"radio"}" name="q${q.id}" value="${originalIndex}" ${ans.includes(originalIndex)?"checked":""}>
+      <span class="letter">${letters[displayIndex]}</span>
       <span>${esc(c)}</span>
-    </label>`).join("");
+    </label>`;
+  }).join("");
   $("#choices").querySelectorAll("input").forEach(inp=>inp.addEventListener("change",e=>{
     let arr=state.answers[q.id]||[];
     const idx=Number(e.target.value);
@@ -185,7 +194,7 @@ function renderReview(){
   }).join("");
 }
 function newExam(){
-  localStorage.removeItem(KEY);state={mode:"timed",order:[],answers:{},flagged:{},current:0,startedAt:null,durationSec:10800,finished:false,submittedAt:null,subset:null};
+  localStorage.removeItem(KEY);state={mode:"timed",order:[],answers:{},flagged:{},choiceOrder:{},current:0,startedAt:null,durationSec:10800,finished:false,submittedAt:null,subset:null};
   clearInterval(timerHandle);$("#results").classList.add("hidden");$("#exam").classList.add("hidden");$("#home").classList.remove("hidden");$("#topstatus").classList.add("hidden");$("#mobileNav").classList.add("hidden");$("#resumeBox").classList.add("hidden");window.scrollTo(0,0);
 }
 $("#startBtn").onclick=()=>startAttempt();
