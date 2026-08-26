@@ -26,7 +26,7 @@
   <div class="hero">
     <span class="eyebrow">AWS Data Engineer Associate • Practice</span>
     <h1>65-question DEA-C01 mock exam</h1>
-    <p>Train with scenario-based questions across the current four exam domains. Choose a 3-hour timed simulation or untimed practice, then review every answer with detailed reasoning.</p>
+    <p>Train with scenario-based questions across the four exam domains. Both modes include optional hints and immediate detailed feedback explaining why the correct answer is right and why every other option is wrong.</p>
     <div class="stats">
       <div class="stat"><strong>65</strong><span>questions</span></div>
       <div class="stat"><strong>4</strong><span>exam domains</span></div>
@@ -42,12 +42,12 @@
         <label class="mode selected" id="timedMode">
           <input type="radio" name="mode" value="timed" checked>
           <div class="mode-title">3-hour mock <span class="badge">Timed</span></div>
-          <p>180-minute custom training timer. Auto-submits when time expires.</p>
+          <p>180-minute training timer with hints and immediate explanations after each completed answer.</p>
         </label>
         <label class="mode" id="untimedMode">
           <input type="radio" name="mode" value="untimed">
-          <div class="mode-title">Practice mode <span class="badge">No timer</span></div>
-          <p>Work at your own pace with the same 65-question exam set.</p>
+          <div class="mode-title">Training mode <span class="badge">No timer</span></div>
+          <p>Work at your own pace, use hints when needed, and learn immediately from every answer.</p>
         </label>
       </div>
       <div class="optionline">
@@ -61,8 +61,8 @@
     </div>
 
     <div class="card card-pad">
-      <h3>Current blueprint coverage</h3>
-      <div class="blue-note"><strong>Timing note:</strong> the real AWS DEA-C01 exam is currently 130 minutes. This site keeps the 3-hour training mode you requested.</div>
+      <h3>How training feedback works</h3>
+      <div class="blue-note"><strong>Hint:</strong> reveal a clue before answering. <strong>Immediate correction:</strong> after a complete response, the question is locked and you see whether you were correct, the main explanation, and a reason for every option.</div>
       <div class="domain-list">
         <div class="domain-row"><div class="domain-meta"><strong>Data Ingestion & Transformation</strong><span>22 questions</span><div class="bar"><i style="width:34%"></i></div></div><b>34%</b></div>
         <div class="domain-row"><div class="domain-meta"><strong>Data Store Management</strong><span>17 questions</span><div class="bar"><i style="width:26%"></i></div></div><b>26%</b></div>
@@ -82,8 +82,14 @@
         <div class="domain-tag" id="domainTag"></div>
       </div>
       <p class="qprompt" id="qprompt"></p>
-      <div id="qhint" class="qhint hidden"></div>
+      <div id="multiHint" class="qhint hidden"></div>
+      <div class="hint-row">
+        <button class="hint-btn" id="hintBtn">💡 Show hint</button>
+        <span class="hint-note">A hint never changes your score.</span>
+      </div>
+      <div id="studyHint" class="study-hint hidden"></div>
       <div class="choices" id="choices"></div>
+      <div id="instantFeedback" class="instant-feedback hidden"></div>
       <div class="qactions">
         <button class="ghost" id="prevBtn">← Previous</button>
         <button class="ghost review-toggle" id="reviewBtn">☆ Mark for review</button>
