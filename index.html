@@ -26,12 +26,12 @@
   <div class="hero">
     <span class="eyebrow">AWS Data Engineer Associate • Practice</span>
     <h1>65-question DEA-C01 mock exams from a 1,000-question bank</h1>
-    <p>Each new attempt selects 65 distinct questions from a much larger bank. The site remembers questions already seen on this device and prioritizes unseen questions before starting a new cycle.</p>
+    <p>Each attempt selects 65 distinct questions with balanced difficulty. Your browser prioritizes unseen questions, and you can transfer an active attempt to another device without restarting.</p>
     <div class="stats">
       <div class="stat"><strong id="bankCount">1,000</strong><span>question bank</span></div>
       <div class="stat"><strong>65</strong><span>selected per attempt</span></div>
       <div class="stat"><strong id="seenCount">0</strong><span>already seen on this device</span></div>
-      <div class="stat"><strong>4</strong><span>exam domains</span></div>
+      <div class="stat"><strong>15 / 35 / 15</strong><span>easy / medium / hard</span></div>
     </div>
   </div>
 
@@ -42,12 +42,12 @@
         <label class="mode selected" id="timedMode">
           <input type="radio" name="mode" value="timed" checked>
           <div class="mode-title">3-hour mock <span class="badge">Timed</span></div>
-          <p>65 randomly selected questions, timer, hints and immediate explanations after each completed answer.</p>
+          <p>65 questions, balanced difficulty, timer, hints and immediate explanations after each completed answer.</p>
         </label>
         <label class="mode" id="untimedMode">
           <input type="radio" name="mode" value="untimed">
           <div class="mode-title">Training mode <span class="badge">No timer</span></div>
-          <p>65 randomly selected questions, no timer, optional hints and immediate detailed feedback.</p>
+          <p>65 questions, optional hints, immediate detailed feedback and cross-device resume.</p>
         </label>
       </div>
       <div class="optionline">
@@ -61,8 +61,8 @@
     </div>
 
     <div class="card card-pad">
-      <h3>Question selection</h3>
-      <div class="blue-note"><strong>1,000-question bank:</strong> each attempt receives 65 distinct questions. The browser stores a local seen-history and gives priority to questions you have not encountered yet. Once there are not enough unseen questions for another full 65-question attempt, a new cycle begins.</div>
+      <h3>Question selection & difficulty</h3>
+      <div class="blue-note"><strong>Each exam:</strong> 22 Data Ingestion & Transformation, 17 Data Store Management, 14 Data Operations & Support and 12 Data Security & Governance. Difficulty is balanced at approximately <strong>15 Easy / 35 Medium / 15 Hard</strong>. Medium and Hard questions use more plausible AWS distractors, so several options can look reasonable until you identify the decisive requirement.</div>
       <div class="domain-list">
         <div class="domain-row"><div class="domain-meta"><strong>Data Ingestion & Transformation</strong><span>22 questions per exam</span><div class="bar"><i style="width:34%"></i></div></div><b>34%</b></div>
         <div class="domain-row"><div class="domain-meta"><strong>Data Store Management</strong><span>17 questions per exam</span><div class="bar"><i style="width:26%"></i></div></div><b>26%</b></div>
@@ -151,7 +151,9 @@
 <script src="q6.js"></script>
 <script src="q7.js"></script>
 <script src="bank-generator.js"></script>
+<script src="quality-patch.js"></script>
 <script src="app.js"></script>
 <script src="selection-patch.js"></script>
+<script src="transfer-sync.js"></script>
 </body>
 </html>
