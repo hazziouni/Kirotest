@@ -4,7 +4,7 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
 <meta name="theme-color" content="#111827"/>
-<title>DEA-C01 Practice Lab — 65 Question Mock Exam</title>
+<title>DEA-C01 Practice Lab — 1,000 Question Bank</title>
 <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
@@ -12,7 +12,7 @@
   <div class="appbar-inner">
     <div class="brand">
       <div class="brand-mark">DEA</div>
-      <div>DEA-C01 Practice Lab<small>Original exam-style questions</small></div>
+      <div>DEA-C01 Practice Lab<small>1,000-question training bank</small></div>
     </div>
     <div class="topstatus hidden" id="topstatus">
       <span class="progress-chip" id="topProgress">Question 1 / 65</span>
@@ -25,13 +25,13 @@
 <section id="home">
   <div class="hero">
     <span class="eyebrow">AWS Data Engineer Associate • Practice</span>
-    <h1>65-question DEA-C01 mock exam</h1>
-    <p>Train with scenario-based questions across the four exam domains. Both modes include optional hints and immediate detailed feedback explaining why the correct answer is right and why every other option is wrong.</p>
+    <h1>65-question DEA-C01 mock exams from a 1,000-question bank</h1>
+    <p>Each new attempt selects 65 distinct questions from a much larger bank. The site remembers questions already seen on this device and prioritizes unseen questions before starting a new cycle.</p>
     <div class="stats">
-      <div class="stat"><strong>65</strong><span>questions</span></div>
+      <div class="stat"><strong id="bankCount">1,000</strong><span>question bank</span></div>
+      <div class="stat"><strong>65</strong><span>selected per attempt</span></div>
+      <div class="stat"><strong id="seenCount">0</strong><span>already seen on this device</span></div>
       <div class="stat"><strong>4</strong><span>exam domains</span></div>
-      <div class="stat"><strong>50 + 15</strong><span>scored + experimental</span></div>
-      <div class="stat"><strong>720</strong><span>official scaled pass score</span></div>
     </div>
   </div>
 
@@ -42,36 +42,36 @@
         <label class="mode selected" id="timedMode">
           <input type="radio" name="mode" value="timed" checked>
           <div class="mode-title">3-hour mock <span class="badge">Timed</span></div>
-          <p>180-minute training timer with hints and immediate explanations after each completed answer.</p>
+          <p>65 randomly selected questions, timer, hints and immediate explanations after each completed answer.</p>
         </label>
         <label class="mode" id="untimedMode">
           <input type="radio" name="mode" value="untimed">
           <div class="mode-title">Training mode <span class="badge">No timer</span></div>
-          <p>Work at your own pace, use hints when needed, and learn immediately from every answer.</p>
+          <p>65 randomly selected questions, no timer, optional hints and immediate detailed feedback.</p>
         </label>
       </div>
       <div class="optionline">
         <input id="shuffle" type="checkbox" checked>
-        <label for="shuffle"><strong>Shuffle question order</strong><br><span style="color:#6b7280">Keeps the domain mix but reduces memorization by question number.</span></label>
+        <label for="shuffle"><strong>Randomized attempt</strong><br><span style="color:#6b7280">Each new exam uses 65 distinct questions and randomizes answer order.</span></label>
       </div>
-      <button class="primary big" id="startBtn">Start mock exam</button>
+      <button class="primary big" id="startBtn">Start new 65-question exam</button>
       <div id="resumeBox" class="hidden" style="margin-top:10px">
         <button class="ghost big" id="resumeBtn" style="margin-top:0">Resume saved attempt</button>
       </div>
     </div>
 
     <div class="card card-pad">
-      <h3>How training feedback works</h3>
-      <div class="blue-note"><strong>Hint:</strong> reveal a clue before answering. <strong>Immediate correction:</strong> after a complete response, the question is locked and you see whether you were correct, the main explanation, and a reason for every option.</div>
+      <h3>Question selection</h3>
+      <div class="blue-note"><strong>1,000-question bank:</strong> each attempt receives 65 distinct questions. The browser stores a local seen-history and gives priority to questions you have not encountered yet. Once there are not enough unseen questions for another full 65-question attempt, a new cycle begins.</div>
       <div class="domain-list">
-        <div class="domain-row"><div class="domain-meta"><strong>Data Ingestion & Transformation</strong><span>22 questions</span><div class="bar"><i style="width:34%"></i></div></div><b>34%</b></div>
-        <div class="domain-row"><div class="domain-meta"><strong>Data Store Management</strong><span>17 questions</span><div class="bar"><i style="width:26%"></i></div></div><b>26%</b></div>
-        <div class="domain-row"><div class="domain-meta"><strong>Data Operations & Support</strong><span>14 questions</span><div class="bar"><i style="width:22%"></i></div></div><b>22%</b></div>
-        <div class="domain-row"><div class="domain-meta"><strong>Data Security & Governance</strong><span>12 questions</span><div class="bar"><i style="width:18%"></i></div></div><b>18%</b></div>
+        <div class="domain-row"><div class="domain-meta"><strong>Data Ingestion & Transformation</strong><span>22 questions per exam</span><div class="bar"><i style="width:34%"></i></div></div><b>34%</b></div>
+        <div class="domain-row"><div class="domain-meta"><strong>Data Store Management</strong><span>17 questions per exam</span><div class="bar"><i style="width:26%"></i></div></div><b>26%</b></div>
+        <div class="domain-row"><div class="domain-meta"><strong>Data Operations & Support</strong><span>14 questions per exam</span><div class="bar"><i style="width:22%"></i></div></div><b>22%</b></div>
+        <div class="domain-row"><div class="domain-meta"><strong>Data Security & Governance</strong><span>12 questions per exam</span><div class="bar"><i style="width:18%"></i></div></div><b>18%</b></div>
       </div>
     </div>
   </div>
-  <div class="footer-note">Independent study tool. Not affiliated with or endorsed by Amazon Web Services. Questions are original and are not copied from the live certification exam.</div>
+  <div class="footer-note">Independent study tool. Not affiliated with or endorsed by Amazon Web Services. Questions are original practice material and are not copied from the live certification exam.</div>
 </section>
 
 <section id="exam" class="hidden">
@@ -150,6 +150,8 @@
 <script src="q5.js"></script>
 <script src="q6.js"></script>
 <script src="q7.js"></script>
+<script src="bank-generator.js"></script>
 <script src="app.js"></script>
+<script src="selection-patch.js"></script>
 </body>
 </html>
