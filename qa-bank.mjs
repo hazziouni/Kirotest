@@ -1,0 +1,14 @@
+import fs from 'node:fs';
+import vm from 'node:vm';
+const files=['q1.js','q2.js','q3.js','q4.js','q5.js','q6.js','q7.js','bank-generator.js','quality-patch.js','quality-fix.js','exam-realism.js','detailed-explanations.js','bank-audit.js'];
+const context={window:{},console};context.globalThis=context;vm.createContext(context);
+for(const f of files){vm.runInContext(fs.readFileSync(new URL(`./${f}`,import.meta.url),'utf8'),context,{filename:f});}
+const bank=context.window.QUESTIONS||[],fail=[];const assert=(ok,msg)=>{if(!ok)fail.push(msg);};
+assert(bank.length===1000,`Expected 1000 questions, got ${bank.length}`);
+const ids=new Set();for(const q of bank){assert(!ids.has(q.id),`Duplicate id ${q.id}`);ids.add(q.id);assert(typeof q.prompt==='string'&&q.prompt.trim(),`Question ${q.id}: empty prompt`);assert(Array.isArray(q.choices)&&q.choices.length>=4,`Question ${q.id}: fewer than 4 choices`);assert(Array.isArray(q.correct)&&q.correct.length,`Question ${q.id}: no answer key`);for(const i of q.correct||[])assert(Number.isInteger(i)&&i>=0&&i<q.choices.length,`Question ${q.id}: invalid correct index ${i}`);assert((q.choices||[]).every(x=>String(x).trim()),`Question ${q.id}: empty choice`);assert(Array.isArray(q.why)&&q.why.length===q.choices.length,`Question ${q.id}: explanation mismatch`);if((q.correct||[]).length>1)assert(q.choices.length>=5,`Question ${q.id}: multi-response has fewer than 5 choices`);}
+const multi=bank.filter(q=>(q.correct||[]).length>1).length;assert(multi>=100,`Expected substantial multiple-response coverage, got ${multi}`);
+const key=context.window.deaConceptKey;assert(typeof key==='function','Concept signature function unavailable');
+const quotas={'Domain 1 — Data Ingestion and Transformation':22,'Domain 2 — Data Store Management':17,'Domain 3 — Data Operations and Support':14,'Domain 4 — Data Security and Governance':12},conceptCounts={},simulated=[];
+for(const [domain,quota] of Object.entries(quotas)){const ks=new Set(bank.filter(q=>q.domain===domain).map(q=>key(q)));conceptCounts[domain]=ks.size;assert(ks.size>=quota,`${domain}: ${ks.size} distinct concepts; need ${quota}`);const used=new Set();for(const q of bank.filter(q=>q.domain===domain)){const k=key(q);if(used.has(k))continue;used.add(k);simulated.push(q);if(used.size===quota)break;}}
+assert(simulated.length===65,`Could build only ${simulated.length}/65 concept-distinct questions`);assert(new Set(simulated.map(q=>key(q))).size===65,'Simulated mock repeats a concept signature');assert(context.window.DEA_BANK_AUDIT?.total===1000,'Bank audit failed to load');
+console.log(JSON.stringify({questions:bank.length,multipleResponse:multi,distinctConcepts:conceptCounts,simulatedMockUniqueConcepts:new Set(simulated.map(q=>key(q))).size},null,2));if(fail.length){console.error('QA FAILED');for(const x of fail)console.error(' - '+x);process.exit(1);}console.log('QA PASSED');
