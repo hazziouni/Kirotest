@@ -8,141 +8,44 @@
 <link rel="stylesheet" href="style.css"/>
 <link rel="stylesheet" href="answer-layout-fix.css"/>
 <link rel="stylesheet" href="topic-tests.css"/>
+<link rel="stylesheet" href="progress-feedback.css"/>
+<link rel="stylesheet" href="study-center.css"/>
 </head>
 <body>
 <header class="appbar">
   <div class="appbar-inner">
-    <div class="brand">
-      <div class="brand-mark">DEA</div>
-      <div>DEA-C01 Practice Lab<small>1,000-question training bank</small></div>
-    </div>
-    <div class="topstatus hidden" id="topstatus">
-      <span class="progress-chip" id="topProgress">Question 1 / 65</span>
-      <span class="attempt-label hidden" id="attemptKind"></span>
-      <div class="timer" id="timer">03:00:00</div>
-    </div>
+    <div class="brand"><div class="brand-mark">DEA</div><div>DEA-C01 Practice Lab<small>1,000-question training bank</small></div></div>
+    <div class="topstatus hidden" id="topstatus"><span class="progress-chip" id="topProgress">Question 1 / 65</span><span class="attempt-label hidden" id="attemptKind"></span><div class="timer" id="timer">03:00:00</div></div>
   </div>
 </header>
-
 <main>
 <section id="home">
   <div class="hero">
     <span class="eyebrow">AWS Data Engineer Associate • Practice</span>
-    <h1>DEA-C01 mock exams and targeted practice</h1>
-    <p>Take full 65-question exams from a 1,000-question bank, or focus on one AWS data-engineering topic. Questions mix single-answer and multiple-response formats with varied exam-style wording.</p>
-    <div class="stats">
-      <div class="stat"><strong id="bankCount">1,000</strong><span>question bank</span></div>
-      <div class="stat"><strong>65</strong><span>full mock questions</span></div>
-      <div class="stat"><strong>30</strong><span>questions per topic test</span></div>
-      <div class="stat"><strong>15 / 35 / 15</strong><span>easy / medium / hard in full mocks</span></div>
-    </div>
+    <h1>DEA-C01 study center, mock exams and targeted practice</h1>
+    <p>Review interactive topic recaps, then take full 65-question exams or focused 30-question tests. The exam engine avoids repeated concepts inside the same attempt and mixes single-answer with multiple-response questions.</p>
+    <div class="stats"><div class="stat"><strong id="bankCount">1,000</strong><span>question bank</span></div><div class="stat"><strong>65</strong><span>full mock questions</span></div><div class="stat"><strong>30</strong><span>questions per topic test</span></div><div class="stat"><strong>15 / 35 / 15</strong><span>easy / medium / hard in full mocks</span></div></div>
   </div>
-
   <div class="setup">
-    <div class="card card-pad">
-      <h2>Full mock exams</h2>
-      <div class="modegrid">
-        <label class="mode selected" id="timedMode">
-          <input type="radio" name="mode" value="timed" checked>
-          <div class="mode-title">3-hour mock <span class="badge">Timed</span></div>
-          <p>65 mixed-domain questions, balanced difficulty, hints and immediate detailed explanations.</p>
-        </label>
-        <label class="mode" id="untimedMode">
-          <input type="radio" name="mode" value="untimed">
-          <div class="mode-title">Training mode <span class="badge">No timer</span></div>
-          <p>65 mixed-domain questions with optional hints, immediate feedback and cross-device resume.</p>
-        </label>
-      </div>
-      <div class="optionline">
-        <input id="shuffle" type="checkbox" checked>
-        <label for="shuffle"><strong>Randomized attempt</strong><br><span style="color:#6b7280">Each new exam uses 65 distinct questions and randomizes answer order.</span></label>
-      </div>
-      <button class="primary big" id="startBtn">Start new 65-question exam</button>
-      <div id="resumeBox" class="hidden" style="margin-top:10px">
-        <button class="ghost big" id="resumeBtn" style="margin-top:0">Resume saved attempt</button>
-      </div>
-    </div>
-
-    <div class="card card-pad">
-      <h3>Full-exam blueprint</h3>
-      <div class="blue-note"><strong>Each full exam:</strong> 22 Data Ingestion & Transformation, 17 Data Store Management, 14 Data Operations & Support and 12 Data Security & Governance. Difficulty is balanced at approximately <strong>15 Easy / 35 Medium / 15 Hard</strong>. Questions include both single-answer and multiple-response scenarios.</div>
-      <div class="domain-list">
-        <div class="domain-row"><div class="domain-meta"><strong>Data Ingestion & Transformation</strong><span>22 questions per exam</span><div class="bar"><i style="width:34%"></i></div></div><b>34%</b></div>
-        <div class="domain-row"><div class="domain-meta"><strong>Data Store Management</strong><span>17 questions per exam</span><div class="bar"><i style="width:26%"></i></div></div><b>26%</b></div>
-        <div class="domain-row"><div class="domain-meta"><strong>Data Operations & Support</strong><span>14 questions per exam</span><div class="bar"><i style="width:22%"></i></div></div><b>22%</b></div>
-        <div class="domain-row"><div class="domain-meta"><strong>Data Security & Governance</strong><span>12 questions per exam</span><div class="bar"><i style="width:18%"></i></div></div><b>18%</b></div>
-      </div>
-    </div>
+    <div class="card card-pad"><h2>Full mock exams</h2><div class="modegrid"><label class="mode selected" id="timedMode"><input type="radio" name="mode" value="timed" checked><div class="mode-title">3-hour mock <span class="badge">Timed</span></div><p>65 mixed-domain questions, balanced difficulty, hints and immediate detailed explanations.</p></label><label class="mode" id="untimedMode"><input type="radio" name="mode" value="untimed"><div class="mode-title">Training mode <span class="badge">No timer</span></div><p>65 mixed-domain questions with optional hints, immediate feedback and cross-device resume.</p></label></div><div class="optionline"><input id="shuffle" type="checkbox" checked><label for="shuffle"><strong>Randomized attempt</strong><br><span style="color:#6b7280">Each exam uses distinct question IDs and avoids repeating the same concept signature inside the attempt.</span></label></div><button class="primary big" id="startBtn">Start new 65-question exam</button><div id="resumeBox" class="hidden" style="margin-top:10px"><button class="ghost big" id="resumeBtn" style="margin-top:0">Resume saved attempt</button></div></div>
+    <div class="card card-pad"><h3>Full-exam blueprint</h3><div class="blue-note"><strong>Each full exam:</strong> 22 Data Ingestion & Transformation, 17 Data Store Management, 14 Data Operations & Support and 12 Data Security & Governance. Difficulty is approximately <strong>15 Easy / 35 Medium / 15 Hard</strong>. Questions include both single-answer and multiple-response scenarios.</div><div class="domain-list"><div class="domain-row"><div class="domain-meta"><strong>Data Ingestion & Transformation</strong><span>22 questions per exam</span><div class="bar"><i style="width:34%"></i></div></div><b>34%</b></div><div class="domain-row"><div class="domain-meta"><strong>Data Store Management</strong><span>17 questions per exam</span><div class="bar"><i style="width:26%"></i></div></div><b>26%</b></div><div class="domain-row"><div class="domain-meta"><strong>Data Operations & Support</strong><span>14 questions per exam</span><div class="bar"><i style="width:22%"></i></div></div><b>22%</b></div><div class="domain-row"><div class="domain-meta"><strong>Data Security & Governance</strong><span>12 questions per exam</span><div class="bar"><i style="width:18%"></i></div></div><b>18%</b></div></div></div>
   </div>
-
-  <section class="topic-section">
-    <div class="topic-header">
-      <div><h2>Targeted topic tests</h2><p>Focus on one exact area. Each test selects 30 relevant questions with varied difficulty and includes realistic single-answer and Select TWO questions.</p></div>
-    </div>
-    <div class="topic-grid">
-      <div class="card topic-card"><h3>Streaming & Ingestion</h3><p>Kinesis Data Streams, Data Firehose, MSK, DMS, DataSync, AppFlow, SQS and ingestion patterns.</p><div class="topic-meta"><span class="topic-pill">30 questions</span><span class="topic-pill">Single + Select TWO</span></div><div class="topic-actions"><button class="topic-timed" data-topic="streaming" data-topic-mode="timed">⏱ 60 min</button><button class="topic-untimed" data-topic="streaming" data-topic-mode="untimed">∞ Untimed</button></div></div>
-      <div class="card topic-card"><h3>AWS Glue & Spark ETL</h3><p>Glue jobs, DynamicFrames, bookmarks, joins, partitioning, skew, transformations and Spark optimization.</p><div class="topic-meta"><span class="topic-pill">30 questions</span><span class="topic-pill">ETL focused</span></div><div class="topic-actions"><button class="topic-timed" data-topic="glue-spark" data-topic-mode="timed">⏱ 60 min</button><button class="topic-untimed" data-topic="glue-spark" data-topic-mode="untimed">∞ Untimed</button></div></div>
-      <div class="card topic-card"><h3>S3, Athena & Data Lake</h3><p>Parquet, partitions, Athena, Glue Catalog, Iceberg, lifecycle, external data and lake optimization.</p><div class="topic-meta"><span class="topic-pill">30 questions</span><span class="topic-pill">Lake architecture</span></div><div class="topic-actions"><button class="topic-timed" data-topic="s3-athena" data-topic-mode="timed">⏱ 60 min</button><button class="topic-untimed" data-topic="s3-athena" data-topic-mode="untimed">∞ Untimed</button></div></div>
-      <div class="card topic-card"><h3>Amazon Redshift</h3><p>Spectrum, distribution, sort keys, RA3, materialized views, workload management and warehouse performance.</p><div class="topic-meta"><span class="topic-pill">30 questions</span><span class="topic-pill">Warehouse focused</span></div><div class="topic-actions"><button class="topic-timed" data-topic="redshift" data-topic-mode="timed">⏱ 60 min</button><button class="topic-untimed" data-topic="redshift" data-topic-mode="untimed">∞ Untimed</button></div></div>
-      <div class="card topic-card"><h3>Amazon DynamoDB</h3><p>Partition keys, hot partitions, GSIs, TTL, PITR, access patterns and scalable NoSQL design.</p><div class="topic-meta"><span class="topic-pill">30 questions</span><span class="topic-pill">NoSQL focused</span></div><div class="topic-actions"><button class="topic-timed" data-topic="dynamodb" data-topic-mode="timed">⏱ 60 min</button><button class="topic-untimed" data-topic="dynamodb" data-topic-mode="untimed">∞ Untimed</button></div></div>
-      <div class="card topic-card"><h3>Orchestration & Operations</h3><p>Step Functions, MWAA, EventBridge, CloudWatch, retries, DLQs, idempotency, CI/CD and troubleshooting.</p><div class="topic-meta"><span class="topic-pill">30 questions</span><span class="topic-pill">Operations focused</span></div><div class="topic-actions"><button class="topic-timed" data-topic="orchestration" data-topic-mode="timed">⏱ 60 min</button><button class="topic-untimed" data-topic="orchestration" data-topic-mode="untimed">∞ Untimed</button></div></div>
-      <div class="card topic-card"><h3>Security & Governance</h3><p>IAM, KMS, VPC endpoints, Lake Formation, Macie, CloudTrail, Secrets Manager, Object Lock and audit.</p><div class="topic-meta"><span class="topic-pill">30 questions</span><span class="topic-pill">Security focused</span></div><div class="topic-actions"><button class="topic-timed" data-topic="security" data-topic-mode="timed">⏱ 60 min</button><button class="topic-untimed" data-topic="security" data-topic-mode="untimed">∞ Untimed</button></div></div>
-    </div>
-    <div class="topic-note"><strong>How these differ from the full mocks:</strong> the two 65-question modes remain mixed according to the exam blueprint. Topic tests intentionally concentrate on one technology area so you can diagnose and strengthen a weak point before returning to a full mock.</div>
-  </section>
-
+  <section class="topic-section"><div class="topic-header"><div><h2>Targeted topic tests</h2><p>Focus on one exact area. Each test selects 30 relevant questions with varied difficulty and realistic single-answer and Select TWO questions.</p></div></div><div class="topic-grid">
+    <div class="card topic-card"><h3>Streaming & Ingestion</h3><p>Kinesis Data Streams, Data Firehose, MSK, DMS, DataSync, AppFlow, SQS and ingestion patterns.</p><div class="topic-meta"><span class="topic-pill">30 questions</span><span class="topic-pill">Single + Select TWO</span></div><div class="topic-actions"><button class="topic-timed" data-topic="streaming" data-topic-mode="timed">⏱ 60 min</button><button class="topic-untimed" data-topic="streaming" data-topic-mode="untimed">∞ Untimed</button></div></div>
+    <div class="card topic-card"><h3>AWS Glue & Spark ETL</h3><p>Glue jobs, DynamicFrames, bookmarks, joins, partitioning, skew, transformations and Spark optimization.</p><div class="topic-meta"><span class="topic-pill">30 questions</span><span class="topic-pill">ETL focused</span></div><div class="topic-actions"><button class="topic-timed" data-topic="glue-spark" data-topic-mode="timed">⏱ 60 min</button><button class="topic-untimed" data-topic="glue-spark" data-topic-mode="untimed">∞ Untimed</button></div></div>
+    <div class="card topic-card"><h3>S3, Athena & Data Lake</h3><p>Parquet, partitions, Athena, Glue Catalog, Iceberg, lifecycle, external data and lake optimization.</p><div class="topic-meta"><span class="topic-pill">30 questions</span><span class="topic-pill">Lake architecture</span></div><div class="topic-actions"><button class="topic-timed" data-topic="s3-athena" data-topic-mode="timed">⏱ 60 min</button><button class="topic-untimed" data-topic="s3-athena" data-topic-mode="untimed">∞ Untimed</button></div></div>
+    <div class="card topic-card"><h3>Amazon Redshift</h3><p>Spectrum, distribution, sort keys, RA3, materialized views, workload management and warehouse performance.</p><div class="topic-meta"><span class="topic-pill">30 questions</span><span class="topic-pill">Warehouse focused</span></div><div class="topic-actions"><button class="topic-timed" data-topic="redshift" data-topic-mode="timed">⏱ 60 min</button><button class="topic-untimed" data-topic="redshift" data-topic-mode="untimed">∞ Untimed</button></div></div>
+    <div class="card topic-card"><h3>Amazon DynamoDB</h3><p>Partition keys, hot partitions, GSIs, TTL, PITR, access patterns and scalable NoSQL design.</p><div class="topic-meta"><span class="topic-pill">30 questions</span><span class="topic-pill">NoSQL focused</span></div><div class="topic-actions"><button class="topic-timed" data-topic="dynamodb" data-topic-mode="timed">⏱ 60 min</button><button class="topic-untimed" data-topic="dynamodb" data-topic-mode="untimed">∞ Untimed</button></div></div>
+    <div class="card topic-card"><h3>Orchestration & Operations</h3><p>Step Functions, MWAA, EventBridge, CloudWatch, retries, DLQs, idempotency, CI/CD and troubleshooting.</p><div class="topic-meta"><span class="topic-pill">30 questions</span><span class="topic-pill">Operations focused</span></div><div class="topic-actions"><button class="topic-timed" data-topic="orchestration" data-topic-mode="timed">⏱ 60 min</button><button class="topic-untimed" data-topic="orchestration" data-topic-mode="untimed">∞ Untimed</button></div></div>
+    <div class="card topic-card"><h3>Security & Governance</h3><p>IAM, KMS, VPC endpoints, Lake Formation, Macie, CloudTrail, Secrets Manager, Object Lock and audit.</p><div class="topic-meta"><span class="topic-pill">30 questions</span><span class="topic-pill">Security focused</span></div><div class="topic-actions"><button class="topic-timed" data-topic="security" data-topic-mode="timed">⏱ 60 min</button><button class="topic-untimed" data-topic="security" data-topic-mode="untimed">∞ Untimed</button></div></div>
+  </div><div class="topic-note"><strong>How these differ from the full mocks:</strong> full exams stay mixed according to the exam blueprint. Topic tests intentionally concentrate on one area so you can strengthen a weak point before returning to a full mock.</div></section>
   <div class="footer-note">Independent study tool. Not affiliated with or endorsed by Amazon Web Services. Questions are original practice material and are not copied from the live certification exam.</div>
 </section>
-
-<section id="exam" class="hidden">
-  <div class="exam-layout">
-    <div class="card question-card">
-      <div class="qtop"><div class="qnum" id="qnum">Question 1 of 65</div><div class="domain-tag" id="domainTag"></div></div>
-      <p class="qprompt" id="qprompt"></p>
-      <div id="multiHint" class="qhint hidden"></div>
-      <div class="hint-row"><button class="hint-btn" id="hintBtn">💡 Show hint</button><span class="hint-note">A hint never changes your score.</span></div>
-      <div id="studyHint" class="study-hint hidden"></div>
-      <div class="choices" id="choices"></div>
-      <div id="instantFeedback" class="instant-feedback hidden"></div>
-      <div class="qactions"><button class="ghost" id="prevBtn">← Previous</button><button class="ghost review-toggle" id="reviewBtn">☆ Mark for review</button><button class="secondary" id="nextBtn">Next →</button></div>
-    </div>
-    <aside class="card sidebar">
-      <div class="side-head"><strong>Question navigator</strong><span class="legend">green = answered</span></div>
-      <div class="qgrid" id="qgrid"></div>
-      <div class="side-summary"><div class="mini"><strong id="answeredCount">0</strong>answered</div><div class="mini"><strong id="flaggedCount">0</strong>review</div></div>
-      <button class="dangerbtn submit-side" id="submitBtn">Submit exam</button>
-    </aside>
-  </div>
-</section>
-
-<section id="results" class="hidden">
-  <div class="card results-hero">
-    <div class="score-ring" id="scoreRing" style="--scoredeg:0deg"><div><strong id="scorePct">0%</strong><span>scored questions</span></div></div>
-    <div class="result-title"><h2 id="resultHeadline">Exam complete</h2><p id="resultText"></p><div class="result-actions"><button class="primary" id="retryMissed">Practice missed questions</button><button class="secondary" id="newExam">Start a new exam</button><button class="ghost" id="toggleReview">Show answer review</button></div></div>
-  </div>
-  <div class="result-grid">
-    <div class="card result-metric"><span id="scoredLabel">Official-style scored set</span><strong id="score50">0 / 50</strong></div>
-    <div class="card result-metric"><span>All practice questions</span><strong id="score65">0 / 65</strong></div>
-    <div class="card result-metric"><span>Unanswered</span><strong id="unansweredMetric">0</strong></div>
-    <div class="card result-metric"><span>Time used</span><strong id="timeUsed">—</strong></div>
-  </div>
-  <div class="card breakdown"><h3>Performance by domain</h3><div id="domainBreakdown"></div></div>
-  <div class="card review-panel hidden" id="reviewPanel"></div>
-  <div class="footer-note">AWS uses scaled scoring from 100–1,000; 720 is the passing score. A raw percentage in this practice tool is not an official AWS scaled score.</div>
-</section>
+<section id="exam" class="hidden"><div class="exam-layout"><div class="card question-card"><div class="qtop"><div class="qnum" id="qnum">Question 1 of 65</div><div class="domain-tag" id="domainTag"></div></div><p class="qprompt" id="qprompt"></p><div id="multiHint" class="qhint hidden"></div><div class="hint-row"><button class="hint-btn" id="hintBtn">💡 Show hint</button><span class="hint-note">A hint never changes your score.</span></div><div id="studyHint" class="study-hint hidden"></div><div class="choices" id="choices"></div><div id="instantFeedback" class="instant-feedback hidden"></div><div class="qactions"><button class="ghost" id="prevBtn">← Previous</button><button class="ghost review-toggle" id="reviewBtn">☆ Mark for review</button><button class="secondary" id="nextBtn">Next →</button></div></div><aside class="card sidebar"><div class="side-head"><strong>Question navigator</strong><span class="legend">live result</span></div><div class="qgrid" id="qgrid"></div><div class="side-summary"><div class="mini"><strong id="answeredCount">0</strong>answered</div><div class="mini"><strong id="flaggedCount">0</strong>review</div></div><button class="dangerbtn submit-side" id="submitBtn">Submit exam</button></aside></div></section>
+<section id="results" class="hidden"><div class="card results-hero"><div class="score-ring" id="scoreRing" style="--scoredeg:0deg"><div><strong id="scorePct">0%</strong><span>scored questions</span></div></div><div class="result-title"><h2 id="resultHeadline">Exam complete</h2><p id="resultText"></p><div class="result-actions"><button class="primary" id="retryMissed">Practice missed questions</button><button class="secondary" id="newExam">Start a new exam</button><button class="ghost" id="toggleReview">Show answer review</button></div></div></div><div class="result-grid"><div class="card result-metric"><span id="scoredLabel">Official-style scored set</span><strong id="score50">0 / 50</strong></div><div class="card result-metric"><span>All practice questions</span><strong id="score65">0 / 65</strong></div><div class="card result-metric"><span>Unanswered</span><strong id="unansweredMetric">0</strong></div><div class="card result-metric"><span>Time used</span><strong id="timeUsed">—</strong></div></div><div class="card breakdown"><h3>Performance by domain</h3><div id="domainBreakdown"></div></div><div class="card review-panel hidden" id="reviewPanel"></div><div class="footer-note">AWS uses scaled scoring from 100–1,000; 720 is the passing score. A raw percentage in this practice tool is not an official AWS scaled score.</div></section>
 </main>
-
-<div class="mobile-nav hidden" id="mobileNav"><button class="ghost" id="mPrev">← Prev</button><button class="ghost review-toggle" id="mReview">☆</button><button class="secondary" id="mNext">Next →</button></div>
-<div class="toast" id="toast"></div><div id="modalRoot"></div>
+<div class="mobile-nav hidden" id="mobileNav"><button class="ghost" id="mPrev">← Prev</button><button class="ghost review-toggle" id="mReview">☆</button><button class="secondary" id="mNext">Next →</button></div><div class="toast" id="toast"></div><div id="modalRoot"></div>
 <script src="q1.js"></script><script src="q2.js"></script><script src="q3.js"></script><script src="q4.js"></script><script src="q5.js"></script><script src="q6.js"></script><script src="q7.js"></script>
-<script src="bank-generator.js"></script>
-<script src="quality-patch.js"></script>
-<script src="quality-fix.js"></script>
-<script src="exam-realism.js"></script>
-<script src="detailed-explanations.js"></script>
-<script src="app.js"></script>
-<script src="selection-patch.js"></script>
-<script src="topic-tests.js"></script>
-<script src="transfer-sync.js"></script>
-</body>
-</html>
+<script src="bank-generator.js"></script><script src="quality-patch.js"></script><script src="quality-fix.js"></script><script src="exam-realism.js"></script><script src="detailed-explanations.js"></script><script src="bank-audit.js"></script>
+<script src="app.js"></script><script src="selection-patch.js"></script><script src="topic-tests.js"></script><script src="progress-feedback.js"></script><script src="transfer-sync.js"></script><script src="study-center.js"></script><script src="site-self-test.js"></script>
+</body></html>
