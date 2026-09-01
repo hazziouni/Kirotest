@@ -14,36 +14,34 @@ function seenSet(){try{return new Set(JSON.parse(localStorage.getItem(HISTORY_KE
 function saveSeen(s){localStorage.setItem(HISTORY_KEY,JSON.stringify([...s]));}
 function text(q){return [q.prompt,q.task,q.domain,...(q.choices||[])].join(" ");}
 function themePool(key){const t=THEMES[key];return (window.QUESTIONS||[]).filter(q=>q.scored&&t.re.test(text(q)));}
-function take(pool,n,seen,used,predicate){const eligible=pool.filter(q=>!used.has(q.id)&&(!predicate||predicate(q)));const fresh=sh(eligible.filter(q=>!seen.has(q.id))),old=sh(eligible.filter(q=>seen.has(q.id)));return fresh.concat(old).slice(0,n);}
+function ckey(q){return window.deaConceptKey?window.deaConceptKey(q):[q.domain,q.task,(q.choices||[]).slice().sort().join("|")].join("::");}
+function take(pool,n,seen,usedIds,usedConcepts,predicate){
+ const eligible=pool.filter(q=>!usedIds.has(q.id)&&!usedConcepts.has(ckey(q))&&(!predicate||predicate(q)));
+ const fresh=sh(eligible.filter(q=>!seen.has(q.id))),old=sh(eligible.filter(q=>seen.has(q.id)));
+ return fresh.concat(old).slice(0,n);
+}
+function add(items,picked,usedIds,usedConcepts){for(const q of items){const k=ckey(q);if(usedIds.has(q.id)||usedConcepts.has(k))continue;usedIds.add(q.id);usedConcepts.add(k);picked.push(q);}}
 function pickTopic(key){
- const pool=themePool(key),seen=seenSet(),used=new Set(),picked=[];
+ const pool=themePool(key),seen=seenSet(),usedIds=new Set(),usedConcepts=new Set(),picked=[];
  const targets={Easy:6,Medium:17,Hard:7};
- let multi=take(pool,6,seen,used,q=>(q.correct||[]).length>1);
- multi.forEach(q=>used.add(q.id));picked.push(...multi);
+ add(take(pool,6,seen,usedIds,usedConcepts,q=>(q.correct||[]).length>1),picked,usedIds,usedConcepts);
  for(const [difficulty,target] of Object.entries(targets)){
    const already=picked.filter(q=>(q.difficulty||"Medium")===difficulty).length;
-   const add=take(pool,Math.max(0,target-already),seen,used,q=>(q.difficulty||"Medium")===difficulty);
-   add.forEach(q=>used.add(q.id));picked.push(...add);
+   add(take(pool,Math.max(0,target-already),seen,usedIds,usedConcepts,q=>(q.difficulty||"Medium")===difficulty),picked,usedIds,usedConcepts);
  }
- if(picked.length<SIZE){const fill=take(pool,SIZE-picked.length,seen,used);fill.forEach(q=>used.add(q.id));picked.push(...fill);}
- if(picked.length<SIZE){const fallback=(window.QUESTIONS||[]).filter(q=>q.scored);const fill=take(fallback,SIZE-picked.length,seen,used);fill.forEach(q=>used.add(q.id));picked.push(...fill);}
+ if(picked.length<SIZE)add(take(pool,SIZE-picked.length,seen,usedIds,usedConcepts),picked,usedIds,usedConcepts);
+ // Keep the test on-topic first. If a very narrow topic has fewer than 30 distinct concepts, then use same-domain related material before any global fallback.
+ if(picked.length<SIZE){
+   const domainCounts={};for(const q of pool)domainCounts[q.domain]=(domainCounts[q.domain]||0)+1;
+   const primaryDomain=Object.entries(domainCounts).sort((a,b)=>b[1]-a[1])[0]?.[0];
+   const related=(window.QUESTIONS||[]).filter(q=>q.scored&&q.domain===primaryDomain);
+   add(take(related,SIZE-picked.length,seen,usedIds,usedConcepts),picked,usedIds,usedConcepts);
+ }
+ if(picked.length<SIZE)add(take((window.QUESTIONS||[]).filter(q=>q.scored),SIZE-picked.length,seen,usedIds,usedConcepts),picked,usedIds,usedConcepts);
  const final=sh(picked.slice(0,SIZE));final.forEach(q=>seen.add(q.id));saveSeen(seen);return final.map(q=>q.id);
 }
-function resetAttemptLabels(){
- const lab=document.querySelector("#attemptKind");if(lab){lab.textContent="";lab.classList.add("hidden");}
- const scoreLabel=document.querySelector("#scoredLabel");if(scoreLabel)scoreLabel.textContent="Official-style scored set";
-}
-function startTopic(key,mode){
- const t=THEMES[key];if(!t)return;
- const ids=pickTopic(key);const timed=mode==="timed";
- state={mode:timed?"timed":"untimed",order:ids,answers:{},flagged:{},choiceOrder:{},locked:{},hintsShown:{},current:0,startedAt:Date.now(),durationSec:timed?TIMED_SECONDS:10800,finished:false,submittedAt:null,subset:null,topicKey:key,topicName:t.name};
- save();showExam();renderQuestion();startTimer();
- const lab=document.querySelector("#attemptKind");if(lab){lab.textContent=t.name+(timed?" • 60 min":" • Untimed");lab.classList.remove("hidden");}
- const scoreLabel=document.querySelector("#scoredLabel");if(scoreLabel)scoreLabel.textContent="Thematic scored set";
-}
-const globalStart=window.startAttempt;
-window.startAttempt=function(subset=null){resetAttemptLabels();return globalStart(subset);};
-window.startTopicTest=startTopic;
-document.querySelectorAll("[data-topic]").forEach(btn=>btn.onclick=()=>startTopic(btn.dataset.topic,btn.dataset.topicMode||"untimed"));
-window.DEA_THEMES=THEMES;
+function resetAttemptLabels(){const lab=document.querySelector("#attemptKind");if(lab){lab.textContent="";lab.classList.add("hidden");}const scoreLabel=document.querySelector("#scoredLabel");if(scoreLabel)scoreLabel.textContent="Official-style scored set";}
+function startTopic(key,mode){const t=THEMES[key];if(!t)return;const ids=pickTopic(key),timed=mode==="timed";state={mode:timed?"timed":"untimed",order:ids,answers:{},flagged:{},choiceOrder:{},locked:{},hintsShown:{},current:0,startedAt:Date.now(),durationSec:timed?TIMED_SECONDS:10800,finished:false,submittedAt:null,subset:null,topicKey:key,topicName:t.name};save();showExam();renderQuestion();startTimer();const lab=document.querySelector("#attemptKind");if(lab){lab.textContent=t.name+(timed?" • 60 min":" • Untimed");lab.classList.remove("hidden");}const scoreLabel=document.querySelector("#scoredLabel");if(scoreLabel)scoreLabel.textContent="Thematic scored set";}
+const globalStart=window.startAttempt;window.startAttempt=function(subset=null){resetAttemptLabels();return globalStart(subset);};
+window.startTopicTest=startTopic;document.querySelectorAll("[data-topic]").forEach(btn=>btn.onclick=()=>startTopic(btn.dataset.topic,btn.dataset.topicMode||"untimed"));window.DEA_THEMES=THEMES;
 })();
